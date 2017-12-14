@@ -155,6 +155,9 @@ export default class Gallery extends PureComponent {
     }
 
     shouldScrollViewPager (evt, gestureState) {
+        if (this.props.images[this.currentPage].customView) {
+            return true;
+        }
         if (gestureState.numberActiveTouches > 1) {
             return false;
         }
@@ -226,6 +229,13 @@ export default class Gallery extends PureComponent {
 
     renderPage (pageData, pageId) {
         const { onViewTransformed, onTransformGestureReleased, errorComponent, imageComponent } = this.props;
+        if (typeof pageData.customView === 'function') {
+            return (
+                <View key={'innerImage#' + pageId}>
+                  {pageData.customView(pageId, pageData)}
+                </View>
+            );
+        }
         return (
             <TransformableImage
               onViewTransformed={((transform) => {
