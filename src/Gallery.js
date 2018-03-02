@@ -274,7 +274,7 @@ export default class Gallery extends PureComponent {
         }
         this.pageCount = images.length;
 
-        if (this.pageCount <= 0) {
+        if (this.pageCount <= 0 || this.props.images[this.currentPage].customView) {
             gestureResponder = {};
         }
 
